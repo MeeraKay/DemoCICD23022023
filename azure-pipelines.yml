@@ -41,3 +41,11 @@ steps:
     createProcess: false
     folderName: 'Meera'
 
+- task: UiPathTest@4
+  inputs:
+    testTarget: 'TestSet'
+    orchestratorConnection: 'DemoCICD23022023'
+    testSet: 'TestSet2'
+    folderName: 'Meera'
+  
+  
