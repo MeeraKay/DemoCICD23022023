@@ -10,22 +10,34 @@ pool:
   vmImage: windows-latest
 
 steps:
-- task: DotNetCoreCLI@2
-  inputs:
-    command: 'build'
-    projects: '$(Build.SourcesDirectory)'
-- task: UiPathInstallPlatform@4
-  inputs:
-    cliVersion: 'WIN_23.6.8581.19168'
+# - task: UiPathInstallPlatform@4
+#   inputs:
+#     cliVersion: 'WIN_23.6.8581.19168'
+# - task: UiPathPack@4
+#   inputs:
+#     versionType: 'AutoVersion'
+#     projectJsonPath: 'project.json'
+#     outputType: 'Process'
+#     orchestratorConnection: 'DemoCICD23022023'
+#     outputPath: '$(Build.ArtifactStagingDirectory)\Output'
+# - task: PublishBuildArtifacts@1
+#   inputs:
+#     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+#     ArtifactName: 'DemoCICD'
+#     publishLocation: 'Container'
+
 - task: UiPathPack@4
   inputs:
     versionType: 'AutoVersion'
-    projectJsonPath: '$(Build.SourcesDirectory)'
-    outputType: 'Process'
-    orchestratorConnection: 'DemoCICD23022023'
+    projectJsonPath: 'project.json'
+    outputType: 'Tests'
     outputPath: '$(Build.ArtifactStagingDirectory)\Output'
-- task: PublishBuildArtifacts@1
+
+
+- task: UiPathDeploy@4
   inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-    ArtifactName: 'DemoCICD'
-    publishLocation: 'Container'
+    orchestratorConnection: 'DemoCICD23022023'
+    packagesPath: '$(Build.ArtifactStagingDirectory)\Output'
+    createProcess: false
+    folderName: 'Meera'
+
