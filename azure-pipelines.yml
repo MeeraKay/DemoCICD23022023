@@ -10,6 +10,10 @@ pool:
   vmImage: windows-latest
 
 steps:
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'build'
+    projects: '$(Build.SourcesDirectory)'
 - task: UiPathInstallPlatform@4
   inputs:
     cliVersion: 'WIN_23.6.8581.19168'
